@@ -1,4 +1,4 @@
-import { createRootRoute, createRoute, createRouter, Outlet } from '@tanstack/react-router'
+import { createRootRoute, createRoute, createRouter, Outlet, Link } from '@tanstack/react-router'
 import { MainPage } from './pages/MainPage'
 import { WorkoutPage } from './pages/WorkoutPage'
 
@@ -6,12 +6,12 @@ const rootRoute = createRootRoute({
   component: () => (
     <div>
       <nav style={{ padding: '1rem', borderBottom: '1px solid #ccc', marginBottom: '2rem' }}>
-        <button onClick={() => window.location.href = '/'} style={{ marginRight: '1rem' }}>
+        <Link to="/" style={{ marginRight: '1rem', padding: '0.5rem 1rem', backgroundColor: '#f0f0f0', textDecoration: 'none', borderRadius: '4px', color: '#333' }}>
           Home
-        </button>
-        <button onClick={() => window.location.href = '/workout'}>
+        </Link>
+        <Link to="/workout" style={{ padding: '0.5rem 1rem', backgroundColor: '#f0f0f0', textDecoration: 'none', borderRadius: '4px', color: '#333' }}>
           Workout
-        </button>
+        </Link>
       </nav>
       <div style={{ padding: '0 1rem' }}>
         <Outlet />

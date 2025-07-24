@@ -10,7 +10,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@mui/material": "^7.2.0",
     "@tanstack/react-router": "^1.129.8",
+    "@tanstack/react-store": "^0.7.3",
+    "@tanstack/store": "^0.7.2",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "vite-plugin-pwa": "^1.0.1"

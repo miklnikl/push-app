@@ -1,6 +1,6 @@
 # Push App
 
-A modern Progressive Web Application (PWA) for tracking pushup workouts, built with React, TypeScript, and Vite. Features offline functionality, atomic design component architecture, and a clean, intuitive interface for fitness tracking.
+A modern Progressive Web Application (PWA) for tracking pushup workouts, built with React, TypeScript, Vite, Material UI, and TanStack Store. Features offline functionality, atomic design component architecture, global state management, and a clean, intuitive interface for fitness tracking.
 
 ## ✨ Features
 
@@ -10,6 +10,8 @@ A modern Progressive Web Application (PWA) for tracking pushup workouts, built w
 - **Responsive Design**: Works seamlessly on desktop and mobile devices
 - **Type Safety**: Full TypeScript support for robust development
 - **Modern Routing**: Client-side routing with TanStack Router
+- **Global State**: TanStack Store for state management
+- **Material UI**: Consistent, modern UI components
 - **Fast Development**: Hot Module Replacement (HMR) with Vite
 
 ## 🚀 Getting Started

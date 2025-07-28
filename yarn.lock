@@ -1474,17 +1474,9 @@
     tiny-invariant "^1.3.3"
     tiny-warning "^1.0.3"
 
-"@tanstack/react-store@^0.7.0":
+"@tanstack/react-store@^0.7.0", "@tanstack/react-store@^0.7.3":
   version "0.7.3"
   resolved "https://registry.npmjs.org/@tanstack/react-store/-/react-store-0.7.3.tgz"
-  integrity sha512-3Dnqtbw9P2P0gw8uUM8WP2fFfg8XMDSZCTsywRPZe/XqqYW8PGkXKZTvP0AHkE4mpqP9Y43GpOg9vwO44azu6Q==
-  dependencies:
-    "@tanstack/store" "0.7.2"
-    use-sync-external-store "^1.5.0"
-
-"@tanstack/react-store@^0.7.3":
-  version "0.7.3"
-  resolved "https://registry.yarnpkg.com/@tanstack/react-store/-/react-store-0.7.3.tgz#567d3983e654b7e5cc83fbc8a20088a319305ce0"
   integrity sha512-3Dnqtbw9P2P0gw8uUM8WP2fFfg8XMDSZCTsywRPZe/XqqYW8PGkXKZTvP0AHkE4mpqP9Y43GpOg9vwO44azu6Q==
   dependencies:
     "@tanstack/store" "0.7.2"
@@ -1503,14 +1495,9 @@
     tiny-invariant "^1.3.3"
     tiny-warning "^1.0.3"
 
-"@tanstack/store@0.7.2", "@tanstack/store@^0.7.0":
+"@tanstack/store@0.7.2", "@tanstack/store@^0.7.0", "@tanstack/store@^0.7.2":
   version "0.7.2"
   resolved "https://registry.npmjs.org/@tanstack/store/-/store-0.7.2.tgz"
-  integrity sha512-RP80Z30BYiPX2Pyo0Nyw4s1SJFH2jyM6f9i3HfX4pA+gm5jsnYryscdq2aIQLnL4TaGuQMO+zXmN9nh1Qck+Pg==
-
-"@tanstack/store@^0.7.2":
-  version "0.7.2"
-  resolved "https://registry.yarnpkg.com/@tanstack/store/-/store-0.7.2.tgz#2e04dac17f7d904539eeb797d8ba0058cee4edf7"
   integrity sha512-RP80Z30BYiPX2Pyo0Nyw4s1SJFH2jyM6f9i3HfX4pA+gm5jsnYryscdq2aIQLnL4TaGuQMO+zXmN9nh1Qck+Pg==
 
 "@types/babel__core@^7.20.5":

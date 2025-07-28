@@ -1,9 +1,9 @@
-import { Container, Paper } from '@mui/material'
-import { Header } from '../../organisms/header/Header'
+import { Container, Paper } from '@mui/material';
+import { Header } from '../../organisms/header/Header';
 
 type PageProps = {
-  children: React.ReactNode
-}
+  children: React.ReactNode;
+};
 
 export function Page({ children }: PageProps) {
   return (
@@ -15,7 +15,7 @@ export function Page({ children }: PageProps) {
     >
       <Header />
       <Container
-        maxWidth="md"
+        maxWidth='md'
         sx={{
           mt: 4,
           display: 'flex',
@@ -35,5 +35,5 @@ export function Page({ children }: PageProps) {
         </Paper>
       </Container>
     </div>
-  )
+  );
 }

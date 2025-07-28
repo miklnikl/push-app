@@ -1,12 +1,12 @@
-import { Typography, Box } from '@mui/material'
+import { Typography, Box } from '@mui/material';
 
 export function MainPage() {
   return (
     <>
-      <Typography variant="h4" gutterBottom>
+      <Typography variant='h4' gutterBottom>
         Main Page
       </Typography>
-      <Typography variant="subtitle1" gutterBottom>
+      <Typography variant='subtitle1' gutterBottom>
         Welcome to the Push App main page!
       </Typography>
       <Box mt={2}>
@@ -15,5 +15,5 @@ export function MainPage() {
         </Typography>
       </Box>
     </>
-  )
+  );
 }

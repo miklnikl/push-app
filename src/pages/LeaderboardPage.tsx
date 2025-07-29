@@ -1,19 +1,12 @@
-import { Typography, Box } from '@mui/material';
+import { SimplePageContent } from '../components/molecules/SimplePageContent';
+import { PAGE_CONTENT } from '../modules/common/constants';
 
 export function LeaderboardPage() {
   return (
-    <>
-      <Typography variant='h4' gutterBottom>
-        Leaderboard Page
-      </Typography>
-      <Typography variant='subtitle1' gutterBottom>
-        See how you compare with other users!
-      </Typography>
-      <Box mt={2}>
-        <Typography>
-          Leaderboard rankings will be available here soon.
-        </Typography>
-      </Box>
-    </>
+    <SimplePageContent
+      title={PAGE_CONTENT.LEADERBOARD.TITLE}
+      subtitle={PAGE_CONTENT.LEADERBOARD.SUBTITLE}
+      description={PAGE_CONTENT.LEADERBOARD.DESCRIPTION}
+    />
   );
 }

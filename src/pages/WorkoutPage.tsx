@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useStore } from '@tanstack/react-store';
-import { 
-  Typography, 
-  Box, 
-  Button, 
-  TextField, 
-  Alert, 
-  LinearProgress, 
+import {
+  Typography,
+  Box,
+  Button,
+  Alert,
+  LinearProgress,
   Chip,
   Card,
   CardContent,
@@ -21,7 +20,6 @@ export function WorkoutPage() {
   const {
     currentWorkout,
     currentSetIndex,
-    currentPushupCount,
     isSetCompleted,
     isRestingBetweenSets,
     restTimeRemaining,
@@ -41,12 +39,10 @@ export function WorkoutPage() {
       setTimerInterval(interval);
       return () => clearInterval(interval);
     } else if (isRestingBetweenSets && restTimeRemaining === 0) {
-      // Automatically start next set when timer reaches 0
       workoutActions.startNextSet();
     }
   }, [isRestingBetweenSets, restTimeRemaining]);
 
-  // Clean up timer on unmount
   useEffect(() => {
     return () => {
       if (timerInterval) {
@@ -55,17 +51,8 @@ export function WorkoutPage() {
     };
   }, [timerInterval]);
 
-  const handlePushupInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = parseInt(e.target.value, 10);
-    if (!isNaN(value) && value >= 0) {
-      workoutActions.setPushupCount(value);
-    }
-  };
-
   const handleCompleteSet = () => {
-    if (currentPushupCount === currentSet.pushupCount) {
-      workoutActions.completeSet();
-    }
+    workoutActions.completeSet();
   };
 
   const handleStartNewWorkout = () => {
@@ -156,7 +143,7 @@ export function WorkoutPage() {
       <Typography variant='h4' gutterBottom textAlign='center'>
         Pushup Workout
       </Typography>
-      
+
       {/* Workout Progress */}
       <Box mb={3}>
         <Box display='flex' justifyContent='space-between' alignItems='center' mb={1}>
@@ -202,52 +189,21 @@ export function WorkoutPage() {
       <Card sx={{ mb: 3, backgroundColor: theme => theme.palette.primary.light + '20' }}>
         <CardContent>
           <Typography variant='h6' gutterBottom textAlign='center'>
-            Current Set: {currentSet.pushupCount} Pushups
+            Current Set
           </Typography>
-          
           <Box display='flex' flexDirection='column' alignItems='center' gap={2} mt={2}>
-            <Box display='flex' alignItems='center' gap={2}>
-              <Button
-                variant='contained'
-                color='error'
-                onClick={workoutActions.decrementPushups}
-                sx={{ minWidth: 50, minHeight: 50, fontSize: '1.5rem', borderRadius: '50%' }}
-                disabled={isSetCompleted}
-              >
-                -
-              </Button>
-              <TextField
-                type='number'
-                value={currentPushupCount}
-                onChange={handlePushupInputChange}
-                inputProps={{ 
-                  min: 0, 
-                  max: currentSet.pushupCount,
-                  style: { textAlign: 'center', fontSize: '2rem' } 
-                }}
-                sx={{ width: 100 }}
-                disabled={isSetCompleted}
-              />
-              <Button
-                variant='contained'
-                color='success'
-                onClick={workoutActions.incrementPushups}
-                sx={{ minWidth: 50, minHeight: 50, fontSize: '1.5rem', borderRadius: '50%' }}
-                disabled={isSetCompleted}
-              >
-                +
-              </Button>
-            </Box>
-            
-            <Typography variant='body1'>
-              Progress: <strong>{currentPushupCount}</strong> / <strong>{currentSet.pushupCount}</strong>
+            <Typography
+              variant='h2'
+              color='primary'
+              sx={{ fontWeight: 700, fontSize: { xs: '3rem', md: '4rem' } }}
+            >
+              {currentSet.pushupCount}
             </Typography>
-            
             <Button
               variant='contained'
               color='primary'
               onClick={handleCompleteSet}
-              disabled={currentPushupCount !== currentSet.pushupCount || isSetCompleted}
+              disabled={isSetCompleted}
               sx={{ mt: 2, px: 4, py: 1, fontSize: '1.1rem' }}
             >
               {isSetCompleted ? 'Set Completed!' : 'Complete Set'}

@@ -2,6 +2,7 @@ import { Store } from '@tanstack/react-store';
 import type { Account, CompletedWorkout, Progress } from './types';
 import type { User } from '../user/types';
 import type { Workout } from '../workout/types';
+import { loadAccountFromStorage, saveAccountToStorage, isStorageAvailable } from './storage';
 
 // Mock user data for development
 const mockUser: User = {
@@ -32,15 +33,27 @@ const calculateProgress = (completedWorkouts: CompletedWorkout[]): Progress => {
   };
 };
 
-// Initial account state
-const initialProgress = calculateProgress([]);
-const initialAccount: Account = {
-  id: 'account-1',
-  user: mockUser,
-  progress: initialProgress,
-  createdAt: new Date('2024-01-01'),
-  updatedAt: new Date(),
+// Initial account state - load from storage if available
+const getInitialAccount = (): Account => {
+  if (isStorageAvailable()) {
+    const savedAccount = loadAccountFromStorage();
+    if (savedAccount) {
+      return savedAccount;
+    }
+  }
+  
+  // Fallback to default account if no saved data
+  const initialProgress = calculateProgress([]);
+  return {
+    id: 'account-1',
+    user: mockUser,
+    progress: initialProgress,
+    createdAt: new Date('2024-01-01'),
+    updatedAt: new Date(),
+  };
 };
+
+const initialAccount = getInitialAccount();
 
 export type AccountState = {
   currentAccount: Account;
@@ -51,6 +64,14 @@ export const accountStore = new Store<AccountState>({
   currentAccount: initialAccount,
   allAccounts: [initialAccount], // Start with current account in leaderboard
 });
+
+// Auto-save current account to localStorage whenever it changes
+if (isStorageAvailable()) {
+  accountStore.subscribe(() => {
+    const state = accountStore.state;
+    saveAccountToStorage(state.currentAccount);
+  });
+}
 
 // Action creators
 export const accountActions = {

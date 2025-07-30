@@ -27,6 +27,20 @@ export const WORKOUT_MESSAGES = {
   },
 };
 
+export const WORKOUT_LEVELS = {
+  BEGINNER: 'beginner',
+  INTERMEDIATE: 'intermediate',
+  ADVANCED: 'advanced',
+} as const;
+
+export type WorkoutLevel = typeof WORKOUT_LEVELS[keyof typeof WORKOUT_LEVELS];
+
+export const WORKOUT_LEVEL_LABELS = {
+  [WORKOUT_LEVELS.BEGINNER]: 'Beginner',
+  [WORKOUT_LEVELS.INTERMEDIATE]: 'Intermediate',
+  [WORKOUT_LEVELS.ADVANCED]: 'Advanced',
+} as const;
+
 export const WORKOUT_CONFIG = {
   BUTTON_STYLES: {
     COUNTER_BUTTON_SIZE: 50,

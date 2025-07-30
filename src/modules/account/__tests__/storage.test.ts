@@ -8,6 +8,7 @@
 
 import { saveAccountToStorage, loadAccountFromStorage, clearAccountStorage, isStorageAvailable } from '../storage';
 import type { Account } from '../types';
+import { WORKOUT_LEVELS } from '../../workout/constants';
 
 // Mock localStorage for testing
 const mockLocalStorage = (() => {
@@ -35,6 +36,7 @@ const mockAccount: Account = {
     name: 'Test User',
     weight: 70,
     age: 25,
+    workoutLevel: WORKOUT_LEVELS.BEGINNER,
     createdAt: new Date('2024-01-01'),
     updatedAt: new Date('2024-01-02'),
   },

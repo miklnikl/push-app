@@ -2,6 +2,7 @@ import { Store } from '@tanstack/react-store';
 import type { Account, CompletedWorkout, Progress } from './types';
 import type { User } from '../user/types';
 import type { Workout } from '../workout/types';
+import { WORKOUT_LEVELS, type WorkoutLevel } from '../workout/constants';
 import { loadAccountFromStorage, saveAccountToStorage, isStorageAvailable } from './storage';
 
 // Mock user data for development
@@ -11,6 +12,7 @@ const mockUser: User = {
   name: 'John Doe',
   weight: 75,
   age: 30,
+  workoutLevel: WORKOUT_LEVELS.BEGINNER,
   createdAt: new Date('2024-01-01'),
   updatedAt: new Date(),
 };
@@ -122,6 +124,7 @@ export const accountActions = {
             email: 'jane.smith@example.com',
             name: 'Jane Smith',
             age: 28,
+            workoutLevel: WORKOUT_LEVELS.INTERMEDIATE,
             createdAt: new Date('2024-01-05'),
             updatedAt: new Date(),
           },
@@ -153,6 +156,7 @@ export const accountActions = {
             email: 'mike.johnson@example.com',
             name: 'Mike Johnson',
             age: 35,
+            workoutLevel: WORKOUT_LEVELS.ADVANCED,
             createdAt: new Date('2024-01-03'),
             updatedAt: new Date(),
           },
@@ -174,6 +178,32 @@ export const accountActions = {
       return {
         ...state,
         allAccounts: [...state.allAccounts, ...mockAccounts],
+      };
+    });
+  },
+
+  updateWorkoutLevel: (workoutLevel: WorkoutLevel) => {
+    accountStore.setState(state => {
+      const updatedUser: User = {
+        ...state.currentAccount.user,
+        workoutLevel,
+        updatedAt: new Date(),
+      };
+
+      const updatedAccount: Account = {
+        ...state.currentAccount,
+        user: updatedUser,
+        updatedAt: new Date(),
+      };
+
+      // Update current account in allAccounts array
+      const updatedAllAccounts = state.allAccounts.map(account => 
+        account.id === updatedAccount.id ? updatedAccount : account
+      );
+
+      return {
+        currentAccount: updatedAccount,
+        allAccounts: updatedAllAccounts,
       };
     });
   },

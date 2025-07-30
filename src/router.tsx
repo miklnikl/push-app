@@ -3,6 +3,7 @@ import { MainPage } from './pages/MainPage';
 import { WorkoutPage } from './pages/WorkoutPage';
 import { ProgressPage } from './pages/ProgressPage';
 import { LeaderboardPage } from './pages/LeaderboardPage';
+import { AccountSettingsPage } from './pages/AccountSettingsPage';
 import { Page } from './components/templates/page/Page';
 
 const rootRoute = createRootRoute({
@@ -37,7 +38,13 @@ const leaderboardRoute = createRoute({
   component: LeaderboardPage,
 });
 
-const routeTree = rootRoute.addChildren([indexRoute, workoutRoute, progressRoute, leaderboardRoute]);
+const settingsRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/settings',
+  component: AccountSettingsPage,
+});
+
+const routeTree = rootRoute.addChildren([indexRoute, workoutRoute, progressRoute, leaderboardRoute, settingsRoute]);
 
 export const router = createRouter({ routeTree });
 

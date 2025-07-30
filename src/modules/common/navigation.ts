@@ -5,11 +5,13 @@ export const NAVIGATION = {
     WORKOUT: 'Workout',
     PROGRESS: 'Progress',
     LEADERBOARD: 'Leaderboard',
+    SETTINGS: 'Settings',
   },
   ROUTES: {
     HOME: '/',
     WORKOUT: '/workout',
     PROGRESS: '/progress',
     LEADERBOARD: '/leaderboard',
+    SETTINGS: '/settings',
   },
 };

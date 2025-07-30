@@ -22,6 +22,9 @@ export function Header() {
           <Button color='inherit' component={RouterLink} to={NAVIGATION.ROUTES.LEADERBOARD}>
             {NAVIGATION.LINKS.LEADERBOARD}
           </Button>
+          <Button color='inherit' component={RouterLink} to={NAVIGATION.ROUTES.SETTINGS}>
+            {NAVIGATION.LINKS.SETTINGS}
+          </Button>
         </Box>
       </Toolbar>
     </AppBar>

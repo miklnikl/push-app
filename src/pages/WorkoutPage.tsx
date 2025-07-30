@@ -7,7 +7,7 @@ import { CompletedWorkoutDisplay } from '../components/molecules/CompletedWorkou
 
 export function WorkoutPage() {
   const workoutState = useStore(workoutStore);
-  const [timerInterval, setTimerInterval] = useState<NodeJS.Timeout | null>(null);
+  const [timerInterval, setTimerInterval] = useState<number | null>(null);
 
   const {
     currentWorkout,

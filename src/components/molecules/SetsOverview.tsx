@@ -1,6 +1,5 @@
 import { Box, Typography } from '@mui/material';
-import { SetChip } from '../atoms/SetChip';
-import { WORKOUT_MESSAGES } from '../../modules/workout/constants';
+import { SimpleSetChip } from '../atoms/SimpleSetChip';
 import type { Workout } from '../../modules/workout/types';
 
 type SetsOverviewProps = {
@@ -12,11 +11,11 @@ export function SetsOverview({ workout, currentSetIndex }: SetsOverviewProps) {
   return (
     <Box mb={3}>
       <Typography variant='h6' gutterBottom>
-        {WORKOUT_MESSAGES.WORKOUT.SETS_OVERVIEW}
+        Sets Overview
       </Typography>
       <Box display='flex' gap={1} flexWrap='wrap'>
         {workout.pushupSequense.map((set, index) => (
-          <SetChip
+          <SimpleSetChip
             key={index}
             pushupCount={set.pushupCount}
             setIndex={index}

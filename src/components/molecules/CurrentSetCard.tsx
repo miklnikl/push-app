@@ -1,45 +1,38 @@
-import { Card, CardContent, Typography, Box } from '@mui/material';
-import { WorkoutControls } from './WorkoutControls';
-import { WORKOUT_MESSAGES } from '../../modules/workout/constants';
+import { Box, Card, CardContent, Typography, Button } from '@mui/material';
 
 type CurrentSetCardProps = {
-  targetPushupCount: number;
-  currentPushupCount: number;
-  onIncrement: () => void;
-  onDecrement: () => void;
-  onCountChange: (value: number) => void;
-  onCompleteSet: () => void;
+  pushupCount: number;
   isSetCompleted: boolean;
+  onCompleteSet: () => void;
   workoutNotes?: string;
 };
 
-export function CurrentSetCard({
-  targetPushupCount,
-  currentPushupCount,
-  onIncrement,
-  onDecrement,
-  onCountChange,
-  onCompleteSet,
-  isSetCompleted,
-  workoutNotes,
-}: CurrentSetCardProps) {
+export function CurrentSetCard({ pushupCount, isSetCompleted, onCompleteSet, workoutNotes }: CurrentSetCardProps) {
   return (
     <>
       <Card sx={{ mb: 3, backgroundColor: theme => theme.palette.primary.light + '20' }}>
         <CardContent>
           <Typography variant='h6' gutterBottom textAlign='center'>
-            {WORKOUT_MESSAGES.WORKOUT.CURRENT_SET(targetPushupCount)}
+            Current Set
           </Typography>
-          
-          <WorkoutControls
-            currentPushupCount={currentPushupCount}
-            targetPushupCount={targetPushupCount}
-            onIncrement={onIncrement}
-            onDecrement={onDecrement}
-            onCountChange={onCountChange}
-            onCompleteSet={onCompleteSet}
-            isSetCompleted={isSetCompleted}
-          />
+          <Box display='flex' flexDirection='column' alignItems='center' gap={2} mt={2}>
+            <Typography
+              variant='h2'
+              color='primary'
+              sx={{ fontWeight: 700, fontSize: { xs: '3rem', md: '4rem' } }}
+            >
+              {pushupCount}
+            </Typography>
+            <Button
+              variant='contained'
+              color='primary'
+              onClick={onCompleteSet}
+              disabled={isSetCompleted}
+              sx={{ mt: 2, px: 4, py: 1, fontSize: '1.1rem' }}
+            >
+              {isSetCompleted ? 'Set Completed!' : 'Complete Set'}
+            </Button>
+          </Box>
         </CardContent>
       </Card>
 

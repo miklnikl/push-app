@@ -1,52 +1,56 @@
 import { useStore } from '@tanstack/react-store';
+import { useEffect, useState } from 'react';
 import { workoutStore, workoutActions } from '../modules/workout/workoutStore';
-import { useRestTimer } from '../modules/workout/hooks/useRestTimer';
-import { validatePushupCount } from '../modules/workout/utils';
-import { ActiveWorkoutDisplay } from '../components/organisms/ActiveWorkoutDisplay';
-import { RestingDisplay } from '../components/organisms/RestingDisplay';
-import { CompletedWorkoutDisplay } from '../components/organisms/CompletedWorkoutDisplay';
+import { SimpleActiveWorkout } from '../components/organisms/SimpleActiveWorkout';
+import { RestDisplay } from '../components/molecules/RestDisplay';
+import { CompletedWorkoutDisplay } from '../components/molecules/CompletedWorkoutDisplay';
 
 export function WorkoutPage() {
   const workoutState = useStore(workoutStore);
+  const [timerInterval, setTimerInterval] = useState<NodeJS.Timeout | null>(null);
 
   const {
     currentWorkout,
     currentSetIndex,
-    currentPushupCount,
     isSetCompleted,
     isRestingBetweenSets,
     restTimeRemaining,
     isWorkoutCompleted,
   } = workoutState;
 
-  // Handle rest timer with custom hook
-  useRestTimer({
-    isResting: isRestingBetweenSets,
-    restTimeRemaining,
-    onTimerUpdate: workoutActions.updateRestTimer,
-    onTimerComplete: workoutActions.startNextSet,
-  });
-
-  const handlePushupCountChange = (value: number) => {
-    const currentSet = currentWorkout.pushupSequense[currentSetIndex];
-    const validatedValue = validatePushupCount(value.toString(), currentSet.pushupCount);
-    if (validatedValue !== null) {
-      workoutActions.setPushupCount(validatedValue);
+  // Handle rest timer
+  useEffect(() => {
+    if (isRestingBetweenSets && restTimeRemaining > 0) {
+      const interval = setInterval(() => {
+        workoutActions.updateRestTimer(restTimeRemaining - 1);
+      }, 1000);
+      setTimerInterval(interval);
+      return () => clearInterval(interval);
+    } else if (isRestingBetweenSets && restTimeRemaining === 0) {
+      workoutActions.startNextSet();
     }
-  };
+  }, [isRestingBetweenSets, restTimeRemaining]);
+
+  useEffect(() => {
+    return () => {
+      if (timerInterval) {
+        clearInterval(timerInterval);
+      }
+    };
+  }, [timerInterval]);
 
   const handleCompleteSet = () => {
-    const currentSet = currentWorkout.pushupSequense[currentSetIndex];
-    if (currentPushupCount === currentSet.pushupCount) {
-      workoutActions.completeSet();
-    }
+    workoutActions.completeSet();
   };
+
+  // Calculate derived values
+  const totalSets = currentWorkout.pushupSequense.length;
 
   // Show congratulations when workout is completed
   if (isWorkoutCompleted) {
     return (
       <CompletedWorkoutDisplay
-        workout={currentWorkout}
+        totalSets={totalSets}
         onStartNewWorkout={workoutActions.resetWorkout}
       />
     );
@@ -58,9 +62,9 @@ export function WorkoutPage() {
     const nextSet = currentWorkout.pushupSequense[nextSetIndex];
     
     return (
-      <RestingDisplay
+      <RestDisplay
         remainingTime={restTimeRemaining}
-        totalRestDuration={currentWorkout.restDuration}
+        totalDuration={currentWorkout.restDuration}
         nextSetNumber={nextSetIndex + 1}
         nextSetPushupCount={nextSet.pushupCount}
         onSkipRest={workoutActions.startNextSet}
@@ -68,16 +72,11 @@ export function WorkoutPage() {
     );
   }
 
-  // Show active workout
   return (
-    <ActiveWorkoutDisplay
+    <SimpleActiveWorkout
       workout={currentWorkout}
       currentSetIndex={currentSetIndex}
-      currentPushupCount={currentPushupCount}
       isSetCompleted={isSetCompleted}
-      onIncrement={workoutActions.incrementPushups}
-      onDecrement={workoutActions.decrementPushups}
-      onCountChange={handlePushupCountChange}
       onCompleteSet={handleCompleteSet}
     />
   );

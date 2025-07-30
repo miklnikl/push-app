@@ -1,6 +1,7 @@
 import { Store } from '@tanstack/react-store';
 import type { Workout } from './types';
 import { getDefaultWorkout } from './defaultWorkouts';
+import { accountActions } from '../account/accountStore';
 
 export type WorkoutState = {
   currentWorkout: Workout;
@@ -10,6 +11,7 @@ export type WorkoutState = {
   isRestingBetweenSets: boolean;
   restTimeRemaining: number;
   isWorkoutCompleted: boolean;
+  workoutStartTime?: Date;
 };
 
 export const workoutStore = new Store<WorkoutState>({
@@ -20,10 +22,18 @@ export const workoutStore = new Store<WorkoutState>({
   isRestingBetweenSets: false,
   restTimeRemaining: 0,
   isWorkoutCompleted: false,
+  workoutStartTime: undefined,
 });
 
 // Action creators
 export const workoutActions = {
+  startWorkout: () => {
+    workoutStore.setState(state => ({
+      ...state,
+      workoutStartTime: new Date(),
+    }));
+  },
+
   incrementPushups: () => {
     workoutStore.setState(state => ({
       ...state,
@@ -56,6 +66,14 @@ export const workoutActions = {
       const isLastSet = state.currentSetIndex === state.currentWorkout.pushupSequense.length - 1;
       
       if (isLastSet) {
+        // Calculate workout duration
+        const workoutDuration = state.workoutStartTime 
+          ? Math.floor((Date.now() - state.workoutStartTime.getTime()) / 1000)
+          : 0;
+
+        // Add completed workout to account
+        accountActions.addCompletedWorkout(state.currentWorkout, workoutDuration);
+
         return {
           ...state,
           isSetCompleted: true,
@@ -99,6 +117,7 @@ export const workoutActions = {
       isRestingBetweenSets: false,
       restTimeRemaining: 0,
       isWorkoutCompleted: false,
+      workoutStartTime: undefined,
     });
   },
 };

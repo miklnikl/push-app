@@ -16,7 +16,15 @@ export function WorkoutPage() {
     isRestingBetweenSets,
     restTimeRemaining,
     isWorkoutCompleted,
+    workoutStartTime,
   } = workoutState;
+
+  // Start workout timer on component mount if not already started
+  useEffect(() => {
+    if (!workoutStartTime && !isWorkoutCompleted) {
+      workoutActions.startWorkout();
+    }
+  }, [workoutStartTime, isWorkoutCompleted]);
 
   // Handle rest timer
   useEffect(() => {
